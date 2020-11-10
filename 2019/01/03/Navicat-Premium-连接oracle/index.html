@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="王宏亮">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://whl88.github.io">
+    <!--SEO-->
+
+<meta name="description" content="Navicat Premium 连接oracle报错。">
+
+
+
+<meta name="keywords" content="ORA-12514,ORA-12737">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Navicat Premium 连接oracle | 王宏亮</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?c7a89a27252683d867b45e899a3d41cc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'UA-131158522-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="王宏亮">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 保持一颗好奇心 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://whl88.github.io">王宏亮</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Navicat Premium 连接oracle">
+            
+	            Navicat Premium 连接oracle
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/工具">
+            工具
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Navicat Premium" title="Navicat Premium">
+                        Navicat Premium
+                    </a>
+                
+                    <a href="/tags/oracle" title="oracle">
+                        oracle
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/01/03</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Navicat-Premium-简介"><a href="#Navicat-Premium-简介" class="headerlink" title="Navicat Premium 简介"></a>Navicat Premium 简介</h1><p>大家可能对 Navicat 很熟悉，用它连接mysql很方便。Navicat Premium 是 Navicat 系列中的一个，只是它支持连接更多种数据库:<br><img src="/2019/01/03/Navicat-Premium-连接oracle/1546491519392.png" title="Navicat Premium 连接oracle"></p>
+<h1 id="报错内容"><a href="#报错内容" class="headerlink" title="报错内容"></a>报错内容</h1><p>今天在连接oracle数据库时报错了，<br><img src="/2019/01/03/Navicat-Premium-连接oracle/1546492000622.png" title="ORA-12514"></p>
+<p>服务名或SID选到SID上报另外一个错，<br><img src="/2019/01/03/Navicat-Premium-连接oracle/1546492174110.png" title="ORA-12737"></p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>打开 <code>工具 》选项 》其他 》 OCI</code>，指定一下OCI ，像下图一样。 <img src="/2019/01/03/Navicat-Premium-连接oracle/1546496004829.png"></p>
+<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>一下这一段来源于<a href="http://wiki.navicat.com/wiki/index.php/Instant_client_required" target="_blank" rel="noopener">官网</a>的翻译。</p>
+<blockquote>
+<p>Basic 和 TNS 连接类型需要 Instant Client 包。要下载 Instant Client<br>包（Instant Client Package - Basic），请前往<br><a href="http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html</a></p>
+<p>注意：Navicat 版本 9 或以上，Navicat 捆绑了 instant client。 连接类型<br>Basic 在 Basic 模式中，Navicat 通过 Oracle Call Interface (OCI) 连接<br>Oracle。</p>
+<p>OCI是一个应用程序界面，让程序开发人员使用第三代语言原有进程或函数呼叫来访问 Oracle<br>数据库及控制全部 SQL 语句运行的阶段。OCI 是一个标准数据库访问的库和动态链接库形式检索函数。</p>
+<p> TNS 在 TNS 模式中，Navicat Oracle 使用在 tnsnames.ora 文件中的别名项目通过 Oracle Call Interface<br>(OCI) 连接 Oracle 服务器。 </p>
+<p><strong>Windows</strong> </p>
+<p>安装说明 </p>
+<p>注意：Navicat 版本 10 或以下，Navicat 只支持 32-bit instant client。</p>
+<p>为你的平台下载相应的 Instant Client 包。所有安装需要 Basic 或 Basic Lite package。</p>
+<p><strong><u>注意：</u></strong> </p>
+<p><strong><u>1.Oracle 9i 或以上，你需要 Instant Client 11 或以下</u></strong> </p>
+<p><strong><u>2.Oracle 8 和 8i 服务器，你需要 Instant Client 10 或以下</u></strong> </p>
+<img src="/2019/01/03/Navicat-Premium-连接oracle/InstantClientSite.jpg">
+<p>解压缩包到一个单一目录，例如 “C:\instantclient_11_1”。 </p>
+<p>在选项 -&gt; OCI 或环境，选择在步骤 2 定义目录的 oci.dll（”C:\instantclient_11_1\oci.dll”）。 </p>
+<p>重新启动 Navicat。</p>
+</blockquote>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/WeChat.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://whl88.github.io/" target="_blank">王宏亮</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/01/27/Git-分支的用法/" class="pre-post btn btn-default" title="Git 分支的用法">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Git 分支的用法</span>
+        </a>
+    
+    
+        <a href="/2018/12/28/gitblit-开启工单功能/" class="next-post btn btn-default" title="gitblit 开启工单功能">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">gitblit 开启工单功能</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'CxcHvL7lGp624Mtzr04s00U5-gzGzoHsz',
+            appKey: '7CPvU50bEMm4D83mC4AWBtLj',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Navicat-Premium-简介"><span class="toc-text">Navicat Premium 简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报错内容"><span class="toc-text">报错内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作"><span class="toc-text">操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解释"><span class="toc-text">解释</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

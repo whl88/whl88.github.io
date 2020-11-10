@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="王宏亮">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://whl88.github.io">
+    <!--SEO-->
+
+<meta name="description" content="用Javascript的方式，主动向服务器推送自定义变量。">
+
+
+
+<meta name="keywords" content="Matomo,Javascript,自定义变量">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Matomo Javascript 方式追踪 自定义变量 | 王宏亮</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?c7a89a27252683d867b45e899a3d41cc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'UA-131158522-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="王宏亮">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 保持一颗好奇心 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://whl88.github.io">王宏亮</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Matomo Javascript 方式追踪 自定义变量">
+            
+	            Matomo Javascript 方式追踪 自定义变量
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/前端">
+            前端
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/Matomo" title="Matomo">
+                        Matomo
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/12/23</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <img src="/2018/12/23/Matomo-Javascript-方式追踪-自定义变量/500458875_wx.jpg" title="Matomo 自定义变量追踪">
+<blockquote>
+<p>Matomo默认监控很多客户端属性，有一些通过提交参数获得，有一些通过解析请求头获得。但这一些都是共用属性，像来源URL、客户端屏幕尺寸、系统版本、浏览器版本等，没有任何业务特性。如果想分析诸如“栏目分类”、“是否收藏”等业务属性，可以借助Matomo的自定义变量功能来实现。</p>
+</blockquote>
+<h1 id="首先"><a href="#首先" class="headerlink" title="首先"></a>首先</h1><p>自定义变量有 page 作用域和 visit 作用域之分。page 作用域内的变量描述的是当前页面本身的属性，在每次页面请求的时候都可以变化，比如“文章分类”、“商品名称”之类的；visit 作用域内的变量在一个完整的session中只允许有一个值，这种作用域的变量适合存“访问者性别”，“访问者身份证号”等跟访问者有关的属性。</p>
+<h2 id="存储的限制和扩展"><a href="#存储的限制和扩展" class="headerlink" title="存储的限制和扩展"></a>存储的限制和扩展</h2><p>默认最多设置5个自定义变量，如果需要拓展可以执行一个命令<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php console customvariables:<span class="built_in">set</span>-max-custom-variables <span class="number">10</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>运行上面的命令，首先本地得先安装php运行环境，<code>console</code> 其实是Matomo提供的一个脚本。</p>
+</blockquote>
+<p>为什么有5个的个数限制呢？看一下Matomo的日志表结构就知道了。<br><img src="/2018/12/23/Matomo-Javascript-方式追踪-自定义变量/自定义变量数据库.jpg" title="Matomo 自定义变量追踪"></p>
+<h1 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h1><p>直接样例代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">_paq.push([<span class="string">'setCustomVariable'</span>,</span><br><span class="line">    <span class="comment">// 还记得上面说过默认情况下自定义变量只能有5个吗？这个参数就是那5个变量的下标（1-5）</span></span><br><span class="line">    <span class="number">1</span>,</span><br><span class="line">    <span class="comment">// 自定义变量的Key，将被存在日志表的 custom_var_k1中</span></span><br><span class="line">    <span class="string">"栏目"</span>,</span><br><span class="line">    <span class="comment">// 自定义变量的Vavlue，将被存在日志表的 custom_var_v1中</span></span><br><span class="line">    <span class="string">"首页 &gt; 机关通告"</span>,</span><br><span class="line">    <span class="comment">// 还记得上面说过自定义变量的作用域吗？将作用域传入，待选项是（visit,page）</span></span><br><span class="line">    <span class="string">"page"</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">_paq.push([<span class="string">'trackPageView'</span>]);<span class="comment">//一定要在这一行代码之前调用上面的代码</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="报表"><a href="#报表" class="headerlink" title="报表"></a>报表</h1><h2 id="设置页面"><a href="#设置页面" class="headerlink" title="设置页面"></a>设置页面</h2><p>将上面的代码放到你要跟踪的网页中，只要被调用一次，你就可以到你的设置页面看一下，变成下面的样子。<br><img src="/2018/12/23/Matomo-Javascript-方式追踪-自定义变量/设置页面.png" title="自定义变量的设置页面"></p>
+<h2 id="报表页面"><a href="#报表页面" class="headerlink" title="报表页面"></a>报表页面</h2><p>归档以后，你应该可以在报表页面看到如下报表。<br><img src="/2018/12/23/Matomo-Javascript-方式追踪-自定义变量/报表.png" title="自定义变量的报表"></p>
+<blockquote>
+<p>关于归档：</p>
+<p>1.Matomo 主要两大功能，收集日志和展现报表。所有收集的日志，在没有归档之前是不会产生报表的。<br>2.默认的归档触发方式是“页面触发”，也就是说，当用户访问报表的时候，实时触发。这种触发方式好处是“实时”，很明显的一个缺点是“卡”。我监控的页面每天有2W左右访问量，简直了，卡到页面打不开。<br>3.对于大访问量的网站，推荐使用定时任务触发（目前我就是用这种）。说白了就是用定时任务，定时执行一个命令行<code>php console core:archive --url=http://xxx.xxx.xxx.xxx/matomo</code></p>
+<blockquote>
+<p>1.windows/linux 各平台的如何使用定时任务，请自行google。<br>2.还有一个小注意事项：两次调用命令的时间间隔一定要大于下图的设置(单位秒)，否则会被忽略<br><img src="/2018/12/23/Matomo-Javascript-方式追踪-自定义变量/归档定时任务间隔.png"></p>
+</blockquote>
+</blockquote>
+<p>打完收工，有什么不明白的留言提问吧:)</p>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/WeChat.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://whl88.github.io/" target="_blank">王宏亮</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/12/23/去掉百度统计对自己的追踪/" class="pre-post btn btn-default" title="去掉百度统计对自己的追踪">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">去掉百度统计对自己的追踪</span>
+        </a>
+    
+    
+        <a href="/2018/12/19/Matomo-JavaScript-方式追踪单页面应用（SPA）/" class="next-post btn btn-default" title="Matomo JavaScript 方式追踪单页面应用（SPA）">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Matomo JavaScript 方式追踪单页面应用（SPA）</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'CxcHvL7lGp624Mtzr04s00U5-gzGzoHsz',
+            appKey: '7CPvU50bEMm4D83mC4AWBtLj',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#首先"><span class="toc-text">首先</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#存储的限制和扩展"><span class="toc-text">存储的限制和扩展</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#收集"><span class="toc-text">收集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报表"><span class="toc-text">报表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置页面"><span class="toc-text">设置页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报表页面"><span class="toc-text">报表页面</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

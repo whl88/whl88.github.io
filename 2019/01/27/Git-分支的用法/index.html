@@ -1,0 +1,467 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="王宏亮">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="https://whl88.github.io">
+    <!--SEO-->
+
+<meta name="description" content="git在分支管理方面与其他版本控制工具相比，有绝对优势。本文介绍一下 git 对分支管理一套流程。">
+
+
+
+<meta name="keywords" content="git,branch,分支">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+    <!--Title-->
+
+
+<title>Git 分支的用法 | 王宏亮</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?c7a89a27252683d867b45e899a3d41cc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+		    i['GoogleAnalyticsObject'] = r;
+		    i[r] = i[r] || function() {
+		        (i[r].q = i[r].q || []).push(arguments)
+		    }, i[r].l = 1 * new Date();
+		    a = s.createElement(o),
+		    m = s.getElementsByTagName(o)[0];
+		    a.async = 1;
+		    a.src = g;
+		    m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'UA-131158522-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+
+    
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="王宏亮">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 保持一颗好奇心 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="https://whl88.github.io">王宏亮</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa "></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa "></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Git 分支的用法">
+            
+	            Git 分支的用法
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/工具">
+            工具
+        </a>
+    </span>
+    
+
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/git" title="git">
+                        git
+                    </a>
+                
+                    <a href="/tags/分支" title="分支">
+                        分支
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/01/27</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>过年在家浪了好几天，写篇博客热热身，准备好投入到工作中去。^_^</p>
+</blockquote>
+<p>Git 相较于其他版本控制工具，其强大的、低开销的分支管理流程是其最大的优势。频繁地在各个分支中<code>检出</code>的成本非常小，几乎在瞬间就可以改变整个工作目录。这使得giter们为新功能新建一个分支，在新分支上工作成了一种新的工作方式。</p>
+<p>因为本人是一个Java程序员，在这里安利一个开发工具 <a href="https://www.jetbrains.com/idea/" target="_blank" rel="noopener">IntelliJ IDEA</a>，后面的 git 操作将都在 Idea 中操作，辅助一些控制台信息。</p>
+<h1 id="分支的新建与合并"><a href="#分支的新建与合并" class="headerlink" title="分支的新建与合并"></a>分支的新建与合并</h1><h2 id="新建分支"><a href="#新建分支" class="headerlink" title="新建分支"></a>新建分支</h2><ol>
+<li><p>打开 Idea 下面的 <code>Version Control</code> 选项卡。</p>
+</li>
+<li><p>选到 <code>Log</code> 选项卡下面。</p>
+<blockquote>
+<p>此时，你可以看到当前git库中所有的版本信息。</p>
+</blockquote>
+</li>
+<li><p>右键某一个版本，在右键菜单中找到 <code>New Branch...</code> 就是啦。</p>
+<img src="/2019/01/27/Git-分支的用法/1549721181747.png">
+</li>
+<li><p>然后在弹出的输入框中给新分支起一个名字，新分支就在<strong><u>本地</u></strong>创建好了。</p>
+ <img src="/2019/01/27/Git-分支的用法/1549721567616.png">
+<blockquote>
+<p>红色方框标注的地方如果勾选，会默认帮你切（checkout）到新分支下。<br>我们是通过Idea的UI新建分支的，新建完分支后你可以打开<code>console</code>选项卡，查看详细的命令。</p>
+<img src="/2019/01/27/Git-分支的用法/1549721892226.png">
+<p>正如你看到的，我们此次新建分支的操作，其命令其实就是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; git -c core.quotepath=<span class="literal">false</span> -c log.showSignature=<span class="literal">false</span> checkout -b <span class="built_in">test</span> 3f0ac5519d781fac4f3f52c3145f78fe425867c2 --</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+<h2 id="Idea-中彩色标签的意义"><a href="#Idea-中彩色标签的意义" class="headerlink" title="Idea 中彩色标签的意义"></a>Idea 中彩色标签的意义</h2><img src="/2019/01/27/Git-分支的用法/1549722243026.png">
+<p>看到上面红框中的标签了吗？<code>绿色</code>代表本地分支，<code>黄色</code>代表HEAD（当前所在分支），<code>紫色</code>代表远程仓库分支。</p>
+<p>选中有标签的这个版本，你会看到具体的标签（分支）的名字。如下图：<img src="/2019/01/27/Git-分支的用法/1549722549672.png"></p>
+<h1 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h1><p>刚刚我们新建了一个分支test,并checkout到了test分支，现在我们要对test进行管理，需要先切换到另外一个分支。这里我们先切换回master分支吧。如下图：</p>
+<img src="/2019/01/27/Git-分支的用法/1549722793300.png">
+<p>控制台打印如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">22:33:35.825: [whl88.github.io] git -c core.quotepath=<span class="literal">false</span> -c log.showSignature=<span class="literal">false</span> checkout master --</span><br><span class="line">Your branch is up to date with <span class="string">'github/master'</span>.</span><br><span class="line">Switched to branch <span class="string">'master'</span></span><br></pre></td></tr></table></figure>
+<p>现在在test分支上打开右键菜单</p>
+<img src="/2019/01/27/Git-分支的用法/1549723102677.png">
+<p>红框中的菜单都很简单，我这里简单说一下。</p>
+<table>
+<thead>
+<tr>
+<th>菜单</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Checkout</td>
+<td>检出，也就是切换到这个分支</td>
+</tr>
+<tr>
+<td>Checkout As…</td>
+<td>也是检出，但是是以新分支检出。它与Checkout相比，就像<code>保存</code>，与<code>另存为...</code>的区别。</td>
+</tr>
+<tr>
+<td>Compare with Current</td>
+<td>与当前分支（例子中当前分支是master）比较</td>
+</tr>
+<tr>
+<td>Rebase Current onto Current</td>
+<td>检出所选分支并做变基。（将当前分支提交加入到所选分支）</td>
+</tr>
+<tr>
+<td>Merge into  Current</td>
+<td>合并到当前分支（将所选分支合并到当前分支）</td>
+</tr>
+<tr>
+<td>Rname</td>
+<td>修改所选分支名称</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>删除所选分支</td>
+</tr>
+</tbody>
+</table>
+<h1 id="远程分支"><a href="#远程分支" class="headerlink" title="远程分支"></a>远程分支</h1><p>远程跟踪分支是远程分支状态的引用。 它们是你不能移动的本地引用，当你做任何网络通信操作时，它们会自动移动。 远程跟踪分支像是你上次连接到远程仓库时，那些分支所处状态的书签。</p>
+<blockquote>
+<p>它们以 <code>(remote)/(branch)</code> 形式命名。 例如，如果你想要看你最后一次与远程仓库 <code>origin</code> 通信时 <code>master</code>分支的状态，你可以查看 <code>origin/master</code> 分支。 你与同事合作解决一个问题并且他们推送了一个 <code>iss53</code> 分支，你可能有自己的本地 <code>iss53</code> 分支；但是在服务器上的分支会指向 <code>origin/iss53</code> 的提交。</p>
+</blockquote>
+<img src="/2019/01/27/Git-分支的用法/1549723996318.png">
+<p>如上图，绿色框是本地分支，红色框是远程分支。右键菜单中的操作跟本地分支差不多，这里就不赘述了。</p>
+<h2 id="推送分支"><a href="#推送分支" class="headerlink" title="推送分支"></a>推送分支</h2><p>前文中我们已经创建了test分支，我们可以在这个分支上工作并提交（commit）代码。希望与同事在这个分支上合作开发的，需要推送（push）这个分支到远程。操作方法是</p>
+<img src="/2019/01/27/Git-分支的用法/1549724868091.png">
+<img src="/2019/01/27/Git-分支的用法/1549724826521.png">
+<p>点击<code>Push</code>按钮就OK啦！</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>分支的应用，无非就是新开分支、在分支上工作、修改、删除、对比、合并分支这些操作。借助Idea，这些操作都变得很简单。至于命令行我认为了解一下还是有必要的，因为提供git图形化界面的软件很多，大家的UI都不一样，但是命令行是一样的；还有就是在你翻看大牛的帖子的时候总不至于表现出这种表情。<br><img src="/2019/01/27/Git-分支的用法/20167417108959.jpg"><br>最后，想要把git玩溜，推荐大家看看官方的书籍，有中文版的，很Nice。我认为翻译得很准确，例子举得也很恰当。如果你看得有点晕乎，那一定要静下心来认真理解他的表述和例子，不行就看两遍，一定会对git有一个非常全面的认识。</p>
+
+    </div>
+    
+        <div class="reward">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="/img/WeChat.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://whl88.github.io/" target="_blank">王宏亮</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2020/11/10/nginx证书配置/" class="pre-post btn btn-default" title="Nginx Https 配置">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">Nginx Https 配置</span>
+        </a>
+    
+    
+        <a href="/2019/01/03/Navicat-Premium-连接oracle/" class="next-post btn btn-default" title="Navicat Premium 连接oracle">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Navicat Premium 连接oracle</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+    
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'CxcHvL7lGp624Mtzr04s00U5-gzGzoHsz',
+            appKey: '7CPvU50bEMm4D83mC4AWBtLj',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-CN'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">文章目录</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分支的新建与合并"><span class="toc-text">分支的新建与合并</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#新建分支"><span class="toc-text">新建分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Idea-中彩色标签的意义"><span class="toc-text">Idea 中彩色标签的意义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分支管理"><span class="toc-text">分支管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#远程分支"><span class="toc-text">远程分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#推送分支"><span class="toc-text">推送分支</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        访问量:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        访客数:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2018
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
